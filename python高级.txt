@@ -1,0 +1,60 @@
+浅拷贝：
+字典套字典、列表套字典、字典套列表，列表套列表，以及各种复杂数据结构的嵌套中，所以当我们的数据类型很复杂的时候，用copy去进行浅拷贝就要非常小心。。。
+深拷贝：
+其实深拷贝就是在内存中重新开辟一块空间，不管数据结构多么复杂，只要遇到可能发生改变的数据类型，就重新开辟一块内存空间把内容复制下来，直到最后一层，不再有复杂的数据类型，就保持其原引用。这样，不管数据结构多么的复杂，数据之间的修改都不会相互影响。
+
+结论：
+深浅拷贝都是对源对象的复制,占用不同的内存空间
+如果源对象只有一级目录的话,源做任何改动,不影响深浅拷贝对象
+如果源对象不止一级目录的话,源做任何改动,都要影响浅拷贝,但不影响深拷贝
+
+
+
+私有化：
+通过下划线，是类里面的变量或者变量名不能被外面调用。
+例子：
+class Person():
+	def __init__(self):
+		self.name = 100
+
+person = Person()
+print person.name 
+
+上面试库打印出name的：100
+
+class Person():
+	__init__(self):
+		self.__name = 100
+		
+person = Person()
+print person.name
+
+上面运行会报错。但是其实也可以使用这个变量，这个变量名变成了：person._Person__name。这样做的目的就是为了不让外界调用，所以最好不这样用.
+
+
+
+property:
+@property成为属性函数，可以对属性赋值时做必要的检查，并保证代码的清晰短小，主要有2个作用
+将方法转换为只读
+重新实现一个属性的设置和读取方法,可做边界判定
+class Money(object):
+    def __init__(self):
+        self.__money = 0
+
+    @property
+    def money(self):
+        return self.__money
+
+    @money.setter
+    def money(self, value):
+        if isinstance(value, int):
+            self.__money = value
+        else:
+            print("error:不是整型数字")
+
+money = Money()
+money.money = 1 # 自动调用money.set方法
+print money.money # 自动调用money.get方法
+			
+			
+			
